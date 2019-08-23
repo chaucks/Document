@@ -5,7 +5,6 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.afterturn.easypoi.word.WordExportUtil;
-import org.apache.http.util.Asserts;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.util.Assert;
@@ -27,9 +26,13 @@ import java.util.function.Function;
  */
 public class EasyPoiUtil {
 
-    public static final String EXCEL_SUFFIX = ".xls,.xlsx";
+    public static final String[] EXCEL_SUFFIX_ARRAY = new String[]{".xls", ".xlsx"};
 
-    public static final String WORD_SUFFIX = ".doc,.docx";
+    public static final String[] WORD_SUFFIX_ARRAY = new String[]{".doc", ".docx"};
+
+    public static final String DOT_REGEX = "\\.";
+
+    public static final String DOT = ".";
 
     /**
      * importExcel
@@ -55,7 +58,6 @@ public class EasyPoiUtil {
         return ExcelImportUtil.importExcel(file, Map.class, importParams);
     }
 
-
     /**
      * easyPoiTemplateExport
      *
@@ -65,7 +67,6 @@ public class EasyPoiUtil {
      */
     public static void templateExport(final String fileName, final String templateUrl, final Object... objects) {
         final String fileSuffix = fileName.split("\\.")[1];
-        Asserts.check(EasyPoiUtil.isFileSuffix(fileSuffix), "文件后缀名错误，点号开头");
         if (EasyPoiUtil.isExcelFileSuffix(fileSuffix)) {
             EasyPoiUtil.excelTemplateExport(fileName, templateUrl, objects);
         }
@@ -159,7 +160,7 @@ public class EasyPoiUtil {
      * @return boolean
      */
     public static boolean isFileSuffix(String fileSuffix) {
-        return 0 == fileSuffix.indexOf(".") && 0 == fileSuffix.lastIndexOf(".");
+        return 0 == fileSuffix.indexOf(DOT) && 0 == fileSuffix.lastIndexOf(DOT);
     }
 
     /**
@@ -169,7 +170,8 @@ public class EasyPoiUtil {
      * @return boolean
      */
     public static boolean isExcelFileSuffix(String suffix) {
-        return EXCEL_SUFFIX.contains(suffix.toLowerCase());
+        String suffixLower = suffix.toLowerCase();
+        return equalsExists(suffixLower, EXCEL_SUFFIX_ARRAY);
     }
 
     /**
@@ -179,6 +181,23 @@ public class EasyPoiUtil {
      * @return boolean
      */
     public static boolean isWordFileSuffix(String suffix) {
-        return WORD_SUFFIX.contains(suffix.toLowerCase());
+        String suffixLower = suffix.toLowerCase();
+        return equalsExists(suffixLower, WORD_SUFFIX_ARRAY);
+    }
+
+    /**
+     * equalsExists
+     *
+     * @param string  string
+     * @param strings strings
+     * @return boolean
+     */
+    public static boolean equalsExists(String string, String... strings) {
+        for (String s : strings) {
+            if (s.equals(string)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
