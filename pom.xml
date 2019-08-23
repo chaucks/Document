@@ -23,6 +23,13 @@
             <type>pom</type>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/cn.afterturn/easypoi-annotation -->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/cn.afterturn/easypoi-base -->
         <dependency>
             <groupId>cn.afterturn</groupId>
@@ -34,13 +41,6 @@
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-web</artifactId>
-            <version>4.1.0</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/cn.afterturn/easypoi-annotation -->
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-annotation</artifactId>
             <version>4.1.0</version>
         </dependency>
 
