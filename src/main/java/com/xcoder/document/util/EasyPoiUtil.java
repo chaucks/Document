@@ -5,6 +5,7 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.afterturn.easypoi.word.WordExportUtil;
+import com.xcoder.utilities.web.WebUtensil;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.util.Assert;
@@ -136,7 +137,7 @@ public class EasyPoiUtil {
         Assert.notNull(fileName, "Poi file name can not be null.");
         HttpServletRequest request = SpringWebUtil.getHttpServletRequest();
         HttpServletResponse response = SpringWebUtil.getHttpServletResponse();
-        WebUtil.poiWrite(fileName, function, request, response);
+        WebUtensil.outWrite(fileName, function, request, response);
     }
 
     /**
