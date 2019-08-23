@@ -67,7 +67,7 @@ public class EasyPoiUtil {
      * @param objects     objects
      */
     public static void templateExport(final String fileName, final String templateUrl, final Object... objects) {
-        final String fileSuffix = DOT.concat(fileName.split("\\.")[1]);
+        final String fileSuffix = DOT.concat(fileName.split(DOT_REGEX)[1]);
         if (EasyPoiUtil.isExcelFileSuffix(fileSuffix)) {
             EasyPoiUtil.excelTemplateExport(fileName, templateUrl, objects);
         }
