@@ -60,19 +60,31 @@ public class EasyPoiUtil {
     }
 
     /**
-     * easyPoiTemplateExport
+     * templateExport
      *
      * @param fileName    fileName
      * @param templateUrl templateUrl
      * @param objects     objects
      */
     public static void templateExport(final String fileName, final String templateUrl, final Object... objects) {
+        Map<String, Object> map = getMap(objects);
+        templateExport(fileName, templateUrl, map);
+    }
+
+    /**
+     * easyPoiTemplateExport
+     *
+     * @param fileName    fileName
+     * @param templateUrl templateUrl
+     * @param map         map
+     */
+    public static void templateExport(final String fileName, final String templateUrl, final Map<String, Object> map) {
         final String fileSuffix = DOT.concat(fileName.split(DOT_REGEX)[1]);
         if (EasyPoiUtil.isExcelFileSuffix(fileSuffix)) {
-            EasyPoiUtil.excelTemplateExport(fileName, templateUrl, objects);
+            EasyPoiUtil.excelTemplateExport(fileName, templateUrl, map);
         }
         if (EasyPoiUtil.isWordFileSuffix(fileSuffix)) {
-            EasyPoiUtil.word07TemplateExport(fileName, templateUrl, objects);
+            EasyPoiUtil.word07TemplateExport(fileName, templateUrl, map);
         }
     }
 
@@ -84,9 +96,19 @@ public class EasyPoiUtil {
      * @param objects     objects
      */
     public static void excelTemplateExport(String fileName, String templateUrl, Object... objects) {
-        Assert.notNull(templateUrl, "Poi template url can not be null.");
-
         Map<String, Object> map = getMap(objects);
+        excelTemplateExport(fileName, templateUrl, map);
+    }
+
+    /**
+     * excelTemplateExport
+     *
+     * @param fileName    fileName
+     * @param templateUrl templateUrl
+     * @param map         map
+     */
+    public static void excelTemplateExport(String fileName, String templateUrl, Map<String, Object> map) {
+        Assert.notNull(templateUrl, "Poi template url can not be null.");
         String absolutePath = SpringWebUtil.getAbsolutePath(templateUrl);
         TemplateExportParams params = new TemplateExportParams(absolutePath);
         Workbook workbook = ExcelExportUtil.exportExcel(params, map);
@@ -108,10 +130,20 @@ public class EasyPoiUtil {
      * @param objects     objects
      */
     public static void word07TemplateExport(String fileName, String templateUrl, Object... objects) {
+        Map<String, Object> map = getMap(objects);
+        word07TemplateExport(fileName, templateUrl, map);
+    }
+
+    /**
+     * word07TemplateExport
+     *
+     * @param fileName    fileName
+     * @param templateUrl templateUrl
+     * @param map         map
+     */
+    public static void word07TemplateExport(String fileName, String templateUrl, Map<String, Object> map) {
         try {
             Assert.notNull(templateUrl, "Poi template url can not be null.");
-
-            Map<String, Object> map = getMap(objects);
             String absolutePath = SpringWebUtil.getAbsolutePath(templateUrl);
             XWPFDocument xwpfDocument = WordExportUtil.exportWord07(absolutePath, map);
             easyPoiExport(fileName, out -> {
